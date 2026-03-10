@@ -1,10 +1,10 @@
-# chaos_based_encryptio# 🔐 Chaos + Blockchain Image Security System
+# chaos_based_encryptio#  Chaos + Blockchain Image Security System
 
 A secure image protection system combining **Chaos-based XOR Encryption** with **Ethereum Blockchain integrity verification**. Images are encrypted using the Logistic Map algorithm, hashed with SHA-256, and the hash is permanently stored on a local Ethereum blockchain via a Solidity smart contract.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Chaos Encryption** — Logistic Map XOR encryption (X0=0.487326, R=3.9999)
 - **PNG Compression** — Lossless Deflate compression before encryption
@@ -16,7 +16,7 @@ A secure image protection system combining **Chaos-based XOR Encryption** with *
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```
 User Upload
@@ -34,7 +34,7 @@ Verify Integrity / Decrypt Image
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -47,7 +47,7 @@ Verify Integrity / Decrypt Image
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 chaos_based_encryption/
@@ -70,7 +70,7 @@ chaos_based_encryption/
 
 ---
 
-## ⚙️ Setup & Installation
+##  Setup & Installation
 
 ### 1. Clone the repository
 ```bash
@@ -113,7 +113,7 @@ Visit `http://127.0.0.1:8080`
 
 ---
 
-## 📜 Smart Contract (HashStorage.sol)
+##  Smart Contract (HashStorage.sol)
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -139,11 +139,11 @@ contract HashStorage {
 }
 ```
 
-> ⚠️ **Important:** In Remix, set EVM version to `london` before compiling to avoid the `PUSH0` invalid opcode error with Ganache.
+> **Important:** In Remix, set EVM version to `london` before compiling to avoid the `PUSH0` invalid opcode error with Ganache.
 
 ---
 
-## 🔒 How It Works
+##  How It Works
 
 ### Encryption
 The Logistic Map equation generates a chaotic keystream:
@@ -160,7 +160,7 @@ JPEG is lossy — it changes pixel values slightly on each save, which would mak
 
 ---
 
-## 🧪 Usage
+##  Usage
 
 | Action | Steps |
 |---|---|
@@ -170,7 +170,7 @@ JPEG is lossy — it changes pixel values slightly on each save, which would mak
 
 ---
 
-## ⚠️ Important Notes
+##  Important Notes
 
 - **Never commit your `.env` file** — it contains your private key
 - Ganache resets on restart — redeploy contract and update `CONTRACT_ADDRESS` after each restart
@@ -178,6 +178,6 @@ JPEG is lossy — it changes pixel values slightly on each save, which would mak
 
 ---
 
-## 📄 License
+##  License
 
 MIT License — free to use and modify.
