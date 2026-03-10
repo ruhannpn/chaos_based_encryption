@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chaos + Blockchain Image Security</title>
+    <style>
+        body {
+            background: #0f2027;
+            font-family: Arial;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            width: 900px;
+            margin: 40px auto;
+        }
+        .card {
+            background: #1c1c1c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        img {
+            width: 300px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .encrypt { background: #00c6ff; }
+        .verify  { background: #28a745; }
+        .decrypt { background: #ff9800; }
+        .block-info {
+            background: #111;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: left;
+        }
+        .success { color: #00ff99; font-weight: bold; }
+        .fail    { color: red;     font-weight: bold; }
+        .warn    { color: #ff9800; }
+        .progress-bar-bg {
+            background: #333;
+            border-radius: 6px;
+            height: 20px;
+            margin-top: 8px;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #00c6ff, #00ff99);
+            height: 20px;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+        .divider { border-color: #333; margin: 15px 0; }
+        .size-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+        hr { border-color: #333; margin: 25px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<h1> Chaos + Blockchain Image Security</h1>
+
+<!-- ENCRYPT -->
+<div class="card">
+    <h2>Encrypt & Store on Blockchain</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <br>
+        <button class="encrypt">Encrypt & Store</button>
+    </form>
+</div>
+
+{% if original_image %}
+<div class="card">
+    <h3>Original Image</h3>
+    <img src="{{ url_for('static', filename=original_image) }}">
+</div>
+{% endif %}
+
+{% if encrypted_image %}
+<div class="card">
+    <h3>Encrypted Image</h3>
+    <img src="{{ url_for('static', filename=encrypted_image) }}">
+</div>
+{% endif %}
+
+{% if tx_hash %}
+<div class="card block-info">
+    <h3> Blockchain Transaction Details</h3>
+    <div class="size-row">
+        <span><b>Transaction Hash:</b></span>
+        <span>{{ tx_hash }}</span>
+    </div>
+    <div class="size-row">
+        <span><b>Block Number:</b></span>
+        <span>{{ block_number }}</span>
+    </div>
+    <div class="size-row">
+        <span><b>Gas Used:</b></span>
+        <span>{{ gas_used }}</span>
+    </div>
+    <div class="size-row">
+        <span><b>Generated SHA-256:</b></span>
+        <span style="font-size:12px; word-break:break-all;">{{ stored_hash }}</span>
+    </div>
+    <div class="size-row">
+        <span><b>Stored On Chain:</b></span>
+        <span style="font-size:12px; word-break:break-all;">{{ chain_hash }}</span>
+    </div>
+
+    {% if compression_ratio is defined and compression_ratio is not none %}
+    <hr class="divider">
+    <h3> Compression Details</h3>
+    <div class="size-row">
+        <span><b>Original Size:</b></span>
+        <span>{{ original_kb }} KB</span>
+    </div>
+    <div class="size-row">
+        <span><b>Converted Size:</b></span>
+        <span>{{ compressed_kb }} KB</span>
+    </div>
+
+    {% if compression_ratio >= 0 %}
+    <div class="size-row">
+        <span><b>Space Saved:</b></span>
+        <span class="success">{{ compression_ratio }}%</span>
+    </div>
+    <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width: {{ compression_ratio }}%;"></div>
+    </div>
+    <p style="font-size:12px; color:#aaa; margin-top:5px;">Compression ratio: {{ compression_ratio }}%</p>
+
+    {% else %}
+    <div class="size-row">
+        <span><b>Size Change:</b></span>
+        <span class="warn">+{{ (compression_ratio * -1) | round(2) }}% larger</span>
+    </div>
+    <p class="warn" style="font-size:13px; margin-top:10px;">
+        ⚠ Input was JPEG (already compressed).<br>
+        PNG conversion adds overhead but ensures lossless
+        quality for accurate encryption and hash verification.
+    </p>
+    {% endif %}
+
+    {% endif %}
+</div>
+{% endif %}
+
+<hr>
+
+<!-- VERIFY -->
+<div class="card">
+    <h2>Verify Stored Image</h2>
+    <form action="/verify" method="POST">
+        <button class="verify">Verify Integrity</button>
+    </form>
+</div>
+
+{% if verify_result is defined and verify_result is not none %}
+<div class="card">
+    <h3>Verification Result</h3>
+    {% if verify_result %}
+        <p class="success">✔ Integrity Verified — Hash Matches Blockchain</p>
+    {% else %}
+        <p class="fail">✖ Hash Mismatch — File Tampered</p>
+    {% endif %}
+</div>
+{% endif %}
+
+<hr>
+
+<!-- DECRYPT -->
+<div class="card">
+    <h2>Decrypt Last Encrypted File</h2>
+    <form action="/decrypt" method="POST">
+        <button class="decrypt">Decrypt Image</button>
+    </form>
+</div>
+
+{% if decrypted_image %}
+<div class="card">
+    <h3> Decrypted Image</h3>
+    <img src="{{ url_for('static', filename=decrypted_image) }}">
+</div>
+{% endif %}
+
+</div>
+</body>
+</html>

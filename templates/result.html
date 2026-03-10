@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encryption & Decryption Result</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 40px;
+            text-align: center;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        img {
+            max-width: 350px;
+            margin: 15px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+
+    <h2>🔐 Encrypted Image</h2>
+    <img src="/output/{{ encrypted_filename }}">
+
+    <form action="/decrypt" method="post">
+        <input type="hidden" name="encrypted_path" value="data/output/{{ encrypted_filename }}">
+        <button type="submit">Decrypt Image</button>
+    </form>
+
+    {% if decrypted_filename %}
+        <h2>🔓 Decrypted Image</h2>
+        <img src="/output/{{ decrypted_filename }}">
+    {% endif %}
+    <p><strong>SHA-256 Hash:</strong></p>
+    <p style="word-break: break-all;">{{ hash_value }}</p>
+
+
+</div>
+
+</body>
+</html>

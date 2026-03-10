@@ -1,0 +1,30 @@
+touch .gitignore
+```
+
+Add this content to `.gitignore`:
+```
+# Environment variables — NEVER commit this
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+
+# Data folders (uploaded/processed images)
+data/input/
+data/output/
+data/last_file_id.json
+
+# Static generated images
+static/original.png
+static/encrypted.png
+static/decrypted.png
+
+# Node modules
+node_modules/
+
+# Mac
+.DS_Store
