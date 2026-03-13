@@ -1,4 +1,4 @@
-#Chaos + Blockchain Image Security System
+# Chaos + Blockchain Image Security System
 
 A secure image protection system combining **Chaos-based XOR Encryption** with **Ethereum Blockchain integrity verification**. Images are encrypted using the Logistic Map algorithm, hashed with SHA-256, and the hash is permanently stored on a local Ethereum blockchain via a Solidity smart contract.
 
